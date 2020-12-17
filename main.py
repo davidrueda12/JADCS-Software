@@ -1,15 +1,28 @@
 from fastapi import FastAPI, HTTPException
 from modelos.resumen_estado_doc_modelo import DocumentoIn
 from modelos.perfil_usuario_modelo import personaIn, personaOut
-from db.resumen_estado_db import DocumentoInDB 
+from db.resumen_estado_db import DocumentoInDB
 from db.resumen_estado_db import listar_documentos_usuario, definir_semaforo, agregar_doc_lista, quitar_doc_lista
 from db.perfil_usuario_db import getUsuario
 from db.perfil_usuario_db import persona
 from db.perfil_usuario_db import getUsuario, updateUsuario, createUsuario
 from db.supervision_db import Supervision
 from db.supervision_db import getSupervision, updateSupervision
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/resumendoc/{nombre}")
@@ -42,14 +55,15 @@ async def agregar_doc(documento: DocumentoIn, nombre: str):
 
     return operacion_exitosa
 
+
 @app.delete("/usuario/documento/borrar")
 async def eliminar_documento(nombre: str, id_radicado: str):
     if getUsuario(nombre) is None:
         raise HTTPException(status_code=404, detail="El usuario no existe")
     if (quitar_doc_lista(nombre, id_radicado) == False):
-        return {"mensaje":"Este radicado no esta asignado a este persona"}
+        return {"mensaje": "Este radicado no esta asignado a este persona"}
     else:
-        return {"mensaje":"Se ha eliminado correctamente el radicado"}
+        return {"mensaje": "Se a eliminado correctamente el radicado"}
 
 
 # Operación GET (READ) para perfil de usuario
