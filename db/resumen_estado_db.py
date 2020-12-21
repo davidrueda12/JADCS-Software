@@ -2,6 +2,7 @@ from datetime import date
 from pydantic import BaseModel
 from typing import Dict
 from db.perfil_usuario_db import persona, getUsuario
+from modelos.resumen_estado_doc_modelo import DocumentoBorrar
 
 
 class DocumentoInDB(BaseModel):
@@ -79,10 +80,10 @@ def agregar_doc_lista(documento_in_db: DocumentoInDB, id_usuario: str):
     return database_documento[id_usuario]
 
 
-def quitar_doc_lista(id_usuario: str, radicado: str):
+def quitar_doc_lista(id_usuario: str, documento: DocumentoBorrar):
     lista = database_documento[id_usuario]
     for i in range(len(lista)):
-        if database_documento[id_usuario][i].id_radicado == radicado:
+        if database_documento[id_usuario][i].id_radicado == DocumentoBorrar:
             del database_documento[id_usuario][i]
             return True
     return False         
