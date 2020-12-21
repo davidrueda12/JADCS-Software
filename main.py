@@ -57,7 +57,7 @@ async def agregar_doc(documento: DocumentoIn, nombre: str):
 
 
 @app.delete("/documento/borrar")
-async def eliminar_documento(nombre: str, id_radicado: str):
+async def eliminar_documento(nombre: str):
     if getUsuario(nombre) is None:
         raise HTTPException(status_code=404, detail="El usuario no existe")
     if (quitar_doc_lista(nombre, id_radicado) == False):
