@@ -14,7 +14,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost:8080","https://jadcsfrontend.herokuapp.com"
-]
+    ]
 
 app.add_middleware(
     CORSMiddleware,
@@ -56,7 +56,7 @@ async def agregar_doc(documento: DocumentoIn, nombre: str):
     return operacion_exitosa
 
 
-@app.delete("/usuario/documento/borrar")
+@app.delete("/documento/borrar")
 async def eliminar_documento(nombre: str, id_radicado: str):
     if getUsuario(nombre) is None:
         raise HTTPException(status_code=404, detail="El usuario no existe")
