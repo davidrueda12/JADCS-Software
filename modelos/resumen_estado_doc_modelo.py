@@ -19,4 +19,4 @@ class DocumentoOut(BaseModel):
     status: str
 
 class DocumentoBorrar(BaseModel):
-    id_radicado: int
+    id_radicado: str

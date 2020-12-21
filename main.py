@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from modelos.resumen_estado_doc_modelo import DocumentoIn
 from modelos.perfil_usuario_modelo import personaIn, personaOut
 from db.resumen_estado_db import DocumentoInDB
-from modelo.resumen_estado_doc_modelo import DocumentoBorrar
+from modelos.resumen_estado_doc_modelo import DocumentoBorrar
 from db.resumen_estado_db import listar_documentos_usuario, definir_semaforo, agregar_doc_lista, quitar_doc_lista
 from db.perfil_usuario_db import getUsuario
 from db.perfil_usuario_db import persona
@@ -58,10 +58,10 @@ async def agregar_doc(documento: DocumentoIn, nombre: str):
 
 
 @app.delete("/documento/borrar")
-async def eliminar_documento(documento: DocumentoBorrar, nombre: str):
+async def eliminar_documento(documentos: DocumentoBorrar, nombre: str):
     if getUsuario(nombre) is None:
         raise HTTPException(status_code=404, detail="El usuario no existe")
-    if (quitar_doc_lista(nombre) == False):
+    if (quitar_doc_lista(nombre,documentos) == False):
         return {"mensaje": "Este radicado no esta asignado a este persona"}
     else:
         return {"mensaje": "Se a eliminado correctamente el radicado"}
