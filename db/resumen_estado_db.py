@@ -80,10 +80,10 @@ def agregar_doc_lista(documento_in_db: DocumentoInDB, id_usuario: str):
     return database_documento[id_usuario]
 
 
-def quitar_doc_lista(id_usuario: str, documentos: DocumentoBorrar):
+def quitar_doc_lista(id_usuario: str, radicado:str):
     lista = database_documento[id_usuario]
     for i in range(len(lista)):
-        if database_documento[id_usuario][i].id_radicado != documentos:
+        if database_documento[id_usuario][i].id_radicado == radicado:
             del database_documento[id_usuario][i]
             return True
     return False         
