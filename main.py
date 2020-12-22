@@ -118,3 +118,16 @@ async def modificar_perfil_usuario(usuario: persona):
 
     updateUsuario(usuario_db)
     return {usuario.idUsuario: "Modificado correctamente"}
+    
+@app.post("/usuario/autenticacion/")    
+async def autenticar (usuarioIn: personaIn):
+
+    user_in_db = getUsuario(usuarioIn.idUsuario)
+
+    if user_in_db == None:
+        raise HTTPException(status_code=404, detail="El usuario no existe")
+
+    if user_in_db.contrasenia != usuarioIn.contrasenia:
+        raise HTTPException(status_code=403, detail="Error de autenticacion")
+
+    return  {"Autenticado": True}
