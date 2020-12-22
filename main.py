@@ -58,10 +58,10 @@ async def agregar_doc(documento: DocumentoIn, nombre: str):
 
 
 @app.delete("/documento/borrar")
-async def eliminar_documento(nombre: str,radicado:str):
+async def eliminar_documento(nombre: str,documento:DocumentoBorrar):
     if getUsuario(nombre) is None:
         raise HTTPException(status_code=404, detail="El usuario no existe")
-    if (quitar_doc_lista(nombre,radicado) == False):
+    if (quitar_doc_lista(nombre,documento) == False):
         return {"mensaje": "Este radicado no esta asignado a este persona"}
     else:
         return {"mensaje": "Se a eliminado correctamente el radicado"}
